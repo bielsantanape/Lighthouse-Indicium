@@ -1,0 +1,85 @@
+[2024-07-03T19:35:57.664+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-03T19:35:57.731+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dag_pipeline_northwind.extract_csv scheduled__2024-05-11T00:00:00+00:00 [queued]>
+[2024-07-03T19:35:57.751+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dag_pipeline_northwind.extract_csv scheduled__2024-05-11T00:00:00+00:00 [queued]>
+[2024-07-03T19:35:57.753+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-07-03T19:35:57.790+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): extract_csv> on 2024-05-11 00:00:00+00:00
+[2024-07-03T19:35:57.806+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1498) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-07-03T19:35:57.814+0000] {standard_task_runner.py:63} INFO - Started process 1509 to run task
+[2024-07-03T19:35:57.814+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'dag_pipeline_northwind', 'extract_csv', 'scheduled__2024-05-11T00:00:00+00:00', '--job-id', '4083', '--raw', '--subdir', 'DAGS_FOLDER/northwind_dag_teste.py', '--cfg-path', '/tmp/tmpil95kze5']
+[2024-07-03T19:35:57.818+0000] {standard_task_runner.py:91} INFO - Job 4083: Subtask extract_csv
+[2024-07-03T19:35:57.941+0000] {task_command.py:426} INFO - Running <TaskInstance: dag_pipeline_northwind.extract_csv scheduled__2024-05-11T00:00:00+00:00 [running]> on host 76916b664cf5
+[2024-07-03T19:35:58.165+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='dag_pipeline_northwind' AIRFLOW_CTX_TASK_ID='extract_csv' AIRFLOW_CTX_EXECUTION_DATE='2024-05-11T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-05-11T00:00:00+00:00'
+[2024-07-03T19:35:58.167+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-03T19:35:58.201+0000] {logging_mixin.py:188} INFO - Running command: meltano elt tap-csv target-csv --transform=run --job_id=extract_csv_2024-05-11
+[2024-07-03T19:35:58.206+0000] {logging_mixin.py:188} INFO - Command failed with error: Command 'meltano elt tap-csv target-csv --transform=run --job_id=extract_csv_2024-05-11' returned non-zero exit status 127.
+[2024-07-03T19:35:58.207+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-03T19:35:58.208+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/northwind_dag_teste.py", line 46, in extract_csv
+    result = subprocess.run(extract_command, shell=True, check=True, capture_output=True, text=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command 'meltano elt tap-csv target-csv --transform=run --job_id=extract_csv_2024-05-11' returned non-zero exit status 127.
+[2024-07-03T19:35:58.232+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=dag_pipeline_northwind, task_id=extract_csv, run_id=scheduled__2024-05-11T00:00:00+00:00, execution_date=20240511T000000, start_date=20240703T193557, end_date=20240703T193558
+[2024-07-03T19:35:58.259+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 4083 for task extract_csv (Command 'meltano elt tap-csv target-csv --transform=run --job_id=extract_csv_2024-05-11' returned non-zero exit status 127.; 1509)
+[2024-07-03T19:35:58.288+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-07-03T19:35:58.348+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-07-03T19:35:58.355+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2024-07-04T01:40:06.879+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-04T01:40:06.952+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dag_pipeline_northwind.extract_csv scheduled__2024-05-11T00:00:00+00:00 [queued]>
+[2024-07-04T01:40:06.975+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dag_pipeline_northwind.extract_csv scheduled__2024-05-11T00:00:00+00:00 [queued]>
+[2024-07-04T01:40:06.976+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-07-04T01:40:07.012+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): extract_csv> on 2024-05-11 00:00:00+00:00
+[2024-07-04T01:40:07.027+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=2167) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-07-04T01:40:07.027+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'dag_pipeline_northwind', 'extract_csv', 'scheduled__2024-05-11T00:00:00+00:00', '--job-id', '5114', '--raw', '--subdir', 'DAGS_FOLDER/dag_pipeline_northwind.py', '--cfg-path', '/tmp/tmpq3mndu6b']
+[2024-07-04T01:40:07.032+0000] {standard_task_runner.py:91} INFO - Job 5114: Subtask extract_csv
+[2024-07-04T01:40:07.031+0000] {standard_task_runner.py:63} INFO - Started process 2179 to run task
+[2024-07-04T01:40:07.132+0000] {task_command.py:426} INFO - Running <TaskInstance: dag_pipeline_northwind.extract_csv scheduled__2024-05-11T00:00:00+00:00 [running]> on host 06ddab619e10
+[2024-07-04T01:40:07.331+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='dag_pipeline_northwind' AIRFLOW_CTX_TASK_ID='extract_csv' AIRFLOW_CTX_EXECUTION_DATE='2024-05-11T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-05-11T00:00:00+00:00'
+[2024-07-04T01:40:07.338+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-04T01:40:07.367+0000] {logging_mixin.py:188} INFO - Running command: meltano elt tap-csv target-csv --transform=run --job_id=extract_csv_2024-05-11
+[2024-07-04T01:40:07.372+0000] {logging_mixin.py:188} INFO - Command failed with error: Command 'meltano elt tap-csv target-csv --transform=run --job_id=extract_csv_2024-05-11' returned non-zero exit status 127.
+[2024-07-04T01:40:07.372+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-04T01:40:07.373+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/dag_pipeline_northwind.py", line 46, in extract_csv
+    result = subprocess.run(extract_command, shell=True, check=True, capture_output=True, text=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command 'meltano elt tap-csv target-csv --transform=run --job_id=extract_csv_2024-05-11' returned non-zero exit status 127.
+[2024-07-04T01:40:07.397+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=dag_pipeline_northwind, task_id=extract_csv, run_id=scheduled__2024-05-11T00:00:00+00:00, execution_date=20240511T000000, start_date=20240704T014006, end_date=20240704T014007
+[2024-07-04T01:40:07.418+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 5114 for task extract_csv (Command 'meltano elt tap-csv target-csv --transform=run --job_id=extract_csv_2024-05-11' returned non-zero exit status 127.; 2179)
+[2024-07-04T01:40:07.450+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-07-04T01:40:07.466+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

@@ -1,0 +1,101 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:12
+    environment:
+      POSTGRES_USER: northwind_user
+      POSTGRES_PASSWORD: thewindisblowing
+      POSTGRES_DB: northwind
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./data/northwind.sql:/docker-entrypoint-initdb.d/northwind.sql
+    ports:
+      - "5432:5432"
+
+  airflow-init:
+    image: apache/airflow:2.9.2
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://northwind_user:thewindisblowing@postgres:5432/northwind
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    entrypoint: ["airflow", "db", "init"]
+    depends_on:
+      - postgres
+
+  airflow-create-user:
+    image: apache/airflow:2.9.2
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://northwind_user:thewindisblowing@postgres:5432/northwind
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      _AIRFLOW_WWW_USER_USERNAME: admin
+      _AIRFLOW_WWW_USER_PASSWORD: admin
+      _AIRFLOW_WWW_USER_FIRSTNAME: admin
+      _AIRFLOW_WWW_USER_LASTNAME: admin
+      _AIRFLOW_WWW_USER_EMAIL: admin@example.com
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    entrypoint: ["airflow", "users", "create", "--username", "admin", "--password", "admin", "--firstname", "admin", "--lastname", "admin", "--role", "Admin", "--email", "admin@example.com"]
+    depends_on:
+      - airflow-init
+
+  airflow-webserver:
+    image: apache/airflow:2.9.2
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://northwind_user:thewindisblowing@postgres:5432/northwind
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./data:/data
+    ports:
+      - "8080:8080"
+    command: webserver
+    depends_on:
+      - postgres
+      - airflow-init
+      - airflow-create-user
+
+  airflow-scheduler:
+    image: apache/airflow:2.9.2
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://northwind_user:thewindisblowing@postgres:5432/northwind
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./data:/data
+    command: scheduler
+    depends_on:
+      - postgres
+      - airflow-init
+      - airflow-webserver
+      - airflow-create-user
+
+  meltano:
+    image: meltano/meltano
+    volumes:
+      - ./meltano_northwind:/project
+      - ./data:/data
+    working_dir: /project
+    entrypoint: ["sleep", "infinity"]
+    environment:
+      MELTANO_DATABASE_URI: sqlite:////project/meltano.db
+    depends_on:
+      - postgres
+    restart: always
+
+volumes:
+  postgres_data:
+  local_data:

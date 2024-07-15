@@ -1,0 +1,81 @@
+[2024-07-02T16:25:19.547+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-02T16:25:19.789+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: pipeline_dag.extract_postgres scheduled__2024-01-07T00:00:00+00:00 [queued]>
+[2024-07-02T16:25:19.812+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: pipeline_dag.extract_postgres scheduled__2024-01-07T00:00:00+00:00 [queued]>
+[2024-07-02T16:25:19.813+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2024-07-02T16:25:20.079+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): extract_postgres> on 2024-01-07 00:00:00+00:00
+[2024-07-02T16:25:20.101+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'pipeline_dag', 'extract_postgres', 'scheduled__2024-01-07T00:00:00+00:00', '--job-id', '1650', '--raw', '--subdir', 'DAGS_FOLDER/dag_northwind.py', '--cfg-path', '/tmp/tmp91079xen']
+[2024-07-02T16:25:20.106+0000] {standard_task_runner.py:91} INFO - Job 1650: Subtask extract_postgres
+[2024-07-02T16:25:20.106+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=460) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-07-02T16:25:20.108+0000] {standard_task_runner.py:63} INFO - Started process 487 to run task
+[2024-07-02T16:25:20.253+0000] {task_command.py:426} INFO - Running <TaskInstance: pipeline_dag.extract_postgres scheduled__2024-01-07T00:00:00+00:00 [running]> on host ee7e13960694
+[2024-07-02T16:25:20.420+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='pipeline_dag' AIRFLOW_CTX_TASK_ID='extract_postgres' AIRFLOW_CTX_EXECUTION_DATE='2024-01-07T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-01-07T00:00:00+00:00'
+[2024-07-02T16:25:20.421+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-02T16:25:20.447+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-02T16:25:20.475+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/dag_northwind.py", line 27, in extract_postgres
+    subprocess.run(extract_command, shell=True, check=True)
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command 'meltano elt tap-postgres target-csv --transform=run' returned non-zero exit status 127.
+[2024-07-02T16:25:20.493+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=pipeline_dag, task_id=extract_postgres, run_id=scheduled__2024-01-07T00:00:00+00:00, execution_date=20240107T000000, start_date=20240702T162519, end_date=20240702T162520
+[2024-07-02T16:25:20.512+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 1650 for task extract_postgres (Command 'meltano elt tap-postgres target-csv --transform=run' returned non-zero exit status 127.; 487)
+[2024-07-02T16:25:20.532+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-07-02T16:25:20.575+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-07-02T16:25:20.587+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2024-07-03T16:23:01.856+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-03T16:23:01.962+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: pipeline_dag.extract_postgres scheduled__2024-01-07T00:00:00+00:00 [queued]>
+[2024-07-03T16:23:01.989+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: pipeline_dag.extract_postgres scheduled__2024-01-07T00:00:00+00:00 [queued]>
+[2024-07-03T16:23:01.993+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2024-07-03T16:23:02.087+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): extract_postgres> on 2024-01-07 00:00:00+00:00
+[2024-07-03T16:23:02.121+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'pipeline_dag', 'extract_postgres', 'scheduled__2024-01-07T00:00:00+00:00', '--job-id', '2431', '--raw', '--subdir', 'DAGS_FOLDER/northwind_dag_teste.py', '--cfg-path', '/tmp/tmpefealxzj']
+[2024-07-03T16:23:02.127+0000] {standard_task_runner.py:91} INFO - Job 2431: Subtask extract_postgres
+[2024-07-03T16:23:02.153+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1654) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-07-03T16:23:02.158+0000] {standard_task_runner.py:63} INFO - Started process 1669 to run task
+[2024-07-03T16:23:02.277+0000] {task_command.py:426} INFO - Running <TaskInstance: pipeline_dag.extract_postgres scheduled__2024-01-07T00:00:00+00:00 [running]> on host 3c2535f14011
+[2024-07-03T16:23:02.633+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='pipeline_dag' AIRFLOW_CTX_TASK_ID='extract_postgres' AIRFLOW_CTX_EXECUTION_DATE='2024-01-07T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-01-07T00:00:00+00:00'
+[2024-07-03T16:23:02.639+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-03T16:23:02.706+0000] {logging_mixin.py:188} INFO - Command failed with error: Command 'meltano elt tap-postgres target-csv --transform=run --job_id=extract_postgres_2024-01-07' returned non-zero exit status 127.
+[2024-07-03T16:23:02.710+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-03T16:23:02.711+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/northwind_dag_teste.py", line 29, in extract_postgres
+    subprocess.run(extract_command, shell=True, check=True)
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command 'meltano elt tap-postgres target-csv --transform=run --job_id=extract_postgres_2024-01-07' returned non-zero exit status 127.
+[2024-07-03T16:23:02.762+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=pipeline_dag, task_id=extract_postgres, run_id=scheduled__2024-01-07T00:00:00+00:00, execution_date=20240107T000000, start_date=20240703T162301, end_date=20240703T162302
+[2024-07-03T16:23:02.810+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 2431 for task extract_postgres (Command 'meltano elt tap-postgres target-csv --transform=run --job_id=extract_postgres_2024-01-07' returned non-zero exit status 127.; 1669)
+[2024-07-03T16:23:02.867+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-07-03T16:23:02.915+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-07-03T16:23:02.918+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

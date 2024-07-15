@@ -1,0 +1,35 @@
+version: 1
+default_environment: dev
+project_id: c0fc639e-ae57-46a5-ac5e-49208bebc445
+environments:
+  - name: dev
+  - name: staging
+  - name: prod
+plugins:
+  extractors:
+    - name: tap-csv
+      variant: meltanolabs
+      pip_url: git+https://github.com/MeltanoLabs/tap-csv.git
+      config:
+        files:
+          - path: /data/order_details.csv
+    - name: tap-postgres
+      variant: meltanolabs
+      pip_url: git+https://github.com/MeltanoLabs/tap-postgres.git
+      config:
+        host: postgres
+        port: 5432
+        user: northwind_user
+        password: thewindisblowing
+        dbname: northwind
+        schema: public
+  loaders:
+    - name: target-postgres
+      variant: meltanolabs
+      pip_url: meltanolabs-target-postgres
+      config:
+        host: postgres
+        port: 5432
+        user: northwind_user
+        password: thewindisblowing
+        dbname: northwind

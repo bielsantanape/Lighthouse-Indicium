@@ -1,0 +1,73 @@
+[2024-07-01T01:35:50.644+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-01T01:35:50.743+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dag_northwind.extract_csv scheduled__2024-04-10T00:00:00+00:00 [queued]>
+[2024-07-01T01:35:50.763+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dag_northwind.extract_csv scheduled__2024-04-10T00:00:00+00:00 [queued]>
+[2024-07-01T01:35:50.764+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2024-07-01T01:35:50.927+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): extract_csv> on 2024-04-10 00:00:00+00:00
+[2024-07-01T01:35:50.968+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=1384) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-07-01T01:35:50.968+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'dag_northwind', 'extract_csv', 'scheduled__2024-04-10T00:00:00+00:00', '--job-id', '753', '--raw', '--subdir', 'DAGS_FOLDER/dag_northwind.py', '--cfg-path', '/tmp/tmpi65eng31']
+[2024-07-01T01:35:50.973+0000] {standard_task_runner.py:91} INFO - Job 753: Subtask extract_csv
+[2024-07-01T01:35:50.972+0000] {standard_task_runner.py:63} INFO - Started process 1408 to run task
+[2024-07-01T01:35:51.127+0000] {task_command.py:426} INFO - Running <TaskInstance: dag_northwind.extract_csv scheduled__2024-04-10T00:00:00+00:00 [running]> on host 05d913303710
+[2024-07-01T01:35:51.306+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='dag_northwind' AIRFLOW_CTX_TASK_ID='extract_csv' AIRFLOW_CTX_EXECUTION_DATE='2024-04-10T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-04-10T00:00:00+00:00'
+[2024-07-01T01:35:51.308+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-01T01:35:51.336+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2024-07-01T01:35:51.338+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'meltano elt tap-csv target-csv --job_id=extract_csv_2024-04-10 && mkdir -p /data/csv/2024-04-10 && mv /project/output/tap-csv/*.csv /data/csv/2024-04-10/']
+[2024-07-01T01:35:51.353+0000] {subprocess.py:86} INFO - Output:
+[2024-07-01T01:35:51.357+0000] {subprocess.py:93} INFO - /usr/bin/bash: line 1: meltano: command not found
+[2024-07-01T01:35:51.358+0000] {subprocess.py:97} INFO - Command exited with return code 127
+[2024-07-01T01:35:51.359+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-01T01:35:51.385+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 127.
+[2024-07-01T01:35:51.395+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=dag_northwind, task_id=extract_csv, run_id=scheduled__2024-04-10T00:00:00+00:00, execution_date=20240410T000000, start_date=20240701T013550, end_date=20240701T013551
+[2024-07-01T01:35:51.430+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 753 for task extract_csv (Bash command failed. The command returned a non-zero exit code 127.; 1408)
+[2024-07-01T01:35:51.465+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-07-01T01:35:51.524+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-07-01T01:35:51.532+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
+[2024-07-01T10:37:00.360+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-07-01T10:37:00.448+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: dag_northwind.extract_csv scheduled__2024-04-10T00:00:00+00:00 [queued]>
+[2024-07-01T10:37:00.476+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: dag_northwind.extract_csv scheduled__2024-04-10T00:00:00+00:00 [queued]>
+[2024-07-01T10:37:00.477+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2024-07-01T10:37:00.762+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): extract_csv> on 2024-04-10 00:00:00+00:00
+[2024-07-01T10:37:00.778+0000] {logging_mixin.py:188} WARNING - /home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py:61 DeprecationWarning: This process (pid=6971) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2024-07-01T10:37:00.778+0000] {standard_task_runner.py:90} INFO - Running: ['airflow', 'tasks', 'run', 'dag_northwind', 'extract_csv', 'scheduled__2024-04-10T00:00:00+00:00', '--job-id', '1299', '--raw', '--subdir', 'DAGS_FOLDER/dag_northwind.py', '--cfg-path', '/tmp/tmpfl6phkuo']
+[2024-07-01T10:37:00.784+0000] {standard_task_runner.py:91} INFO - Job 1299: Subtask extract_csv
+[2024-07-01T10:37:00.783+0000] {standard_task_runner.py:63} INFO - Started process 6993 to run task
+[2024-07-01T10:37:00.930+0000] {task_command.py:426} INFO - Running <TaskInstance: dag_northwind.extract_csv scheduled__2024-04-10T00:00:00+00:00 [running]> on host 85c6ea7cd9cf
+[2024-07-01T10:37:01.124+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='dag_northwind' AIRFLOW_CTX_TASK_ID='extract_csv' AIRFLOW_CTX_EXECUTION_DATE='2024-04-10T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-04-10T00:00:00+00:00'
+[2024-07-01T10:37:01.126+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-07-01T10:37:01.168+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2024-07-01T10:37:01.170+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'meltano elt tap-csv target-csv --job_id=extract_csv_2024-04-10 && mkdir -p /data/csv/2024-04-10 && mv /project/output/tap-csv/*.csv /data/csv/2024-04-10/']
+[2024-07-01T10:37:01.194+0000] {subprocess.py:86} INFO - Output:
+[2024-07-01T10:37:01.200+0000] {subprocess.py:93} INFO - /usr/bin/bash: line 1: meltano: command not found
+[2024-07-01T10:37:01.203+0000] {subprocess.py:97} INFO - Command exited with return code 127
+[2024-07-01T10:37:01.205+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-07-01T10:37:01.227+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 127.
+[2024-07-01T10:37:01.238+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=dag_northwind, task_id=extract_csv, run_id=scheduled__2024-04-10T00:00:00+00:00, execution_date=20240410T000000, start_date=20240701T103700, end_date=20240701T103701
+[2024-07-01T10:37:01.264+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 1299 for task extract_csv (Bash command failed. The command returned a non-zero exit code 127.; 6993)
+[2024-07-01T10:37:01.291+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-07-01T10:37:01.310+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

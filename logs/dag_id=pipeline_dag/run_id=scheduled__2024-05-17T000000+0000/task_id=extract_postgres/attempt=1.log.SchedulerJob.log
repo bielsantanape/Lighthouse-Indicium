@@ -1,0 +1,1 @@
+[2024-07-03T16:59:38.249+0000] {scheduler_job_runner.py:769} ERROR - Executor reports task instance <TaskInstance: pipeline_dag.extract_postgres scheduled__2024-05-17T00:00:00+00:00 [queued]> finished (failed) although the task says it's queued. (Info: None) Was the task killed externally?
